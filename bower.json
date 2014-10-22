@@ -1,0 +1,16 @@
+{
+  "name": "node-framework",
+  "version": "1.0.0",
+  "authors": [
+    "Marcin Piekarski <contact@marcin.com.au>"
+  ],
+  "description": "Node Framework",
+  "main": "server.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
