@@ -3,10 +3,15 @@
 
 var mongoose = require("mongoose");
 
-// Model
+// Schema
 // ==========================================================
 
-module.exports = mongoose.model("User", {
+var UserSchema = mongoose.Schema({
 	firstName: { type: String, default: "" },
 	lastName: { type: String, default: "" }
 });
+
+// Model
+// ==========================================================
+
+module.exports = mongoose.model("User", UserSchema);

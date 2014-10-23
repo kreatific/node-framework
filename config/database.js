@@ -1,3 +1,3 @@
 module.exports = {
-	url: "mongodb://localhost/mean-example"
+	url: "mongodb://localhost/node-framework"
 };
