@@ -17,10 +17,31 @@
     <h1>{{title}}</h1>
 
     <!-- form -->
+    <p>Enter message: ($asObject)</p>
     <input type="text" ng-model="data.text"/>
 
-    <!-- display -->
+    <!-- $asObject -->
     <p>You said: {{data.text}}</p>
+
+    <!-- form -->
+    <p>Enter another message: ($asArray)</p>
+
+    <!-- $asArray -->
+    <ul>
+        <li ng-repeat="message in messages">
+
+            <!-- exit a message -->
+            <input ng-model="message.text" ng-change="messages.$save(message)" />
+
+            <!-- delete message -->
+            <button ng-click="messages.$remove(message)">X</button>
+        </li>
+    </ul>
+
+    <form ng-submit="addMessage(newMessageText)">
+        <input ng-model="newMessageText"/>
+        <button type="submit">Add Message</button>
+    </form>
 
     <!-- scripts -->
     <script>
@@ -41,15 +62,27 @@
             // Create an AngularFire reference to the data
             var sync = $firebase(ref);
 
-            // Note.
+            // Object Notes
             // $asObject setups up three-way data binding DOM <-> JavaScript <-> Firebase
             // Call $asObject() to create a synchronised object then $bindTo(), which binds it to a $scope variable
 
-            // Download the data into a local object
+            // Download data into an object
             var syncObject = sync.$asObject();
 
             // Synchronize the object with a three-way data binding
             syncObject.$bindTo($scope, "data");
+
+            // Array Notes
+            // Never use native push() or split() on read-only firebase array
+            // Instead use $add(), $save() and $remove()
+
+            // Create a read-only synchronized array for use in our HTML code
+            $scope.messages = sync.$asArray();
+
+            // Add message
+            $scope.addMessage = function(text) {
+                $scope.messages.$add({text: text});
+            };
         }]);
 
     </script>
