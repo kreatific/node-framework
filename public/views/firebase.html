@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" ng-app="sampleApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+</head>
+<body ng-controller="SampleCtrl">
+    <h1>{{title}}</h1>
+
+    <!-- form -->
+    <input type="text" ng-model="data.text"/>
+
+    <!-- display -->
+    <p>You said: {{data.text}}</p>
+
+    <!-- scripts -->
+    <script>
+        console.log("Firebase / Angular Demo");
+
+        // Set app module
+        var app = angular.module("sampleApp", ["firebase"]);
+
+        // Set app controller
+        app.controller("SampleCtrl", ["$scope", "$firebase", function($scope, $firebase) {
+
+            // Set title
+            $scope.title= "Firebase / Angular Demo";
+
+            // Set firebase reference
+            var ref = new Firebase("https://kreatific-fb-sandbox.firebaseio.com/");
+
+            // Create an AngularFire reference to the data
+            var sync = $firebase(ref);
+
+            // Note.
+            // $asObject setups up three-way data binding DOM <-> JavaScript <-> Firebase
+            // Call $asObject() to create a synchronised object then $bindTo(), which binds it to a $scope variable
+
+            // Download the data into a local object
+            var syncObject = sync.$asObject();
+
+            // Synchronize the object with a three-way data binding
+            syncObject.$bindTo($scope, "data");
+        }]);
+
+    </script>
+
+</body>
+</html>

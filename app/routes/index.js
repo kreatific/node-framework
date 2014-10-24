@@ -9,8 +9,9 @@ var User = require("../models/user");
 module.exports = function(app) {
 
 	// Other routes
-	require("./posts")(app);
-	require("./users")(app);
+	// require("./posts")(app);
+	// require("./users")(app);
+	require("./firebase")(app);
 
 	// Catch-all route
 	app.get("*", function(req, res) {
